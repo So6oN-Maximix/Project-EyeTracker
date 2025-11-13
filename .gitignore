@@ -1,0 +1,14 @@
+# Fichier .gitignore
+
+# --- Données ---
+# Ignorer les données d'entrée (vidéos, etc.)
+datas
+outputs/
+
+# --- Environnement ---
+# Ignorer l'environnement virtuel de Poetry
+.venv/
+
+# --- Caches Python ---
+__pycache__/
+*.pyc
