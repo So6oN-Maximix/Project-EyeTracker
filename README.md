@@ -8,7 +8,7 @@ vidéo d'eye-tracking et générer des timelines d'attention.
 * Python 3.10+
 * [Poetry](https://python-poetry.org/) (pour la gestion des dépendances)
 
-## 🛠️ Installation (1/5 points - Réplicable)
+## 🛠️ Installation 
 
 1.  Clonez ce dépôt :
     ```bash
@@ -27,9 +27,9 @@ vidéo d'eye-tracking et générer des timelines d'attention.
     Ce dépôt n'inclut pas les données vidéo. Vous devez placer vos propres
     fichiers `.mp4` dans le dossier `data/`.
 
-## 🏃 Lancement de l'analyse (1/5 points - Documentation)
+## 🏃 Lancement de l'analyse
 
 Pour lancer le script d'analyse principal :
 
 ```bash
-poetry run python eye_tracker/main.py
+poetry run codes/Code_principal_2024-Modified.py
