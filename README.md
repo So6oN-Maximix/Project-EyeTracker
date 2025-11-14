@@ -34,5 +34,6 @@ Pour lancer le script d'analyse principal :
 
 ```bash
 poetry run python3 codes/Code_principal_2024-Modified.py
+```
 
 Vous pouvez adapter le `python` en `python3` en fonction de votre configuration.
