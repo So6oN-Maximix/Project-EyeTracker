@@ -13,23 +13,26 @@ vidéo d'eye-tracking et générer des timelines d'attention.
 1.  Clonez ce dépôt :
     ```bash
     git clone [URL_DE_VOTRE_DEPOT]
-    cd mon_projet_eye_tracking
+    cd [NOM_DU_PROJET]
     ```
 
 2.  Installez les dépendances avec Poetry :
-    *(Cette commande lit le fichier `poetry.lock` et installe 
-    exactement les bonnes versions de `numpy`, `matplotlib`, etc.)*
+    *(Cette commande lit le fichier `poetry.lock` et installe exactement les bonnes versions de `numpy`, `matplotlib`, etc.)*
     ```bash
     poetry install
     ```
 
 3.  **Configuration des données :**
-    Ce dépôt n'inclut pas les données vidéo. Vous devez placer vos propres
-    fichiers `.mp4` dans le dossier `data/`.
+    Ce dépôt n'inclut pas les données vidéo. Vous devez placer les fichiers `.mp4` et `.csv` dans un dossier `datas/`.
+
+4. **Gestion des sorties :**
+	Ce dépôt n'inclut pas non plus les sorties que peuvent produire les différents programmes. Vous devez créer un dossier `outputs/` (Nom donné dans les codes) afin d'y acceuillir les données de sorties.
 
 ## 🏃 Lancement de l'analyse
 
 Pour lancer le script d'analyse principal :
 
 ```bash
-poetry run codes/Code_principal_2024-Modified.py
+poetry run python3 codes/Code_principal_2024-Modified.py
+
+Vous pouvez adapter le `python` en `python3` en fonction de votre configuration.
