@@ -13,7 +13,7 @@ vidéo d'eye-tracking et générer des timelines d'attention.
 1.  Clonez ce dépôt :
     ```bash
     git clone [URL_DE_VOTRE_DEPOT]
-    cd [NOM_DU_PROJET]
+    cd Project-EyeTracker
     ```
 
 2.  Installez les dépendances avec Poetry :
