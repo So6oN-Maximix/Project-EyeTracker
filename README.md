@@ -3,12 +3,12 @@
 Ce projet utilise OpenCV, Scikit-learn et Matplotlib pour analyser des flux
 vidéo d'eye-tracking et générer des timelines d'attention.
 
-## 🚀 Prérequis
+## Prérequis
 
 * Python 3.10+
 * [Poetry](https://python-poetry.org/) (pour la gestion des dépendances)
 
-## 🛠️ Installation 
+## Installation 
 
 1.  Clonez ce dépôt :
     ```bash
@@ -28,7 +28,7 @@ vidéo d'eye-tracking et générer des timelines d'attention.
 4. **Gestion des sorties :**
 	Ce dépôt n'inclut pas non plus les sorties que peuvent produire les différents programmes. Vous devez créer un dossier `outputs/` (Nom donné dans les codes) afin d'y acceuillir les données de sorties.
 
-## 🏃 Lancement de l'analyse
+## Lancement de l'analyse
 
 Pour lancer le script d'analyse principal :
 
