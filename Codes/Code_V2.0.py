@@ -292,9 +292,13 @@ def clusters_fixations(size, X, Y, C, title1, title2, width=None, height=None):
 """ Fichier 21s : 20241015_0001_00.mp4 et 20241015_0001_00.csv
     Fichier 3m32s : 20250325_0001_00.mp4 et 20250325_0001_00.csv"""
 
-video_path, csv_file, input_timecode01, input_timecode02, csv_file_timeline = (
-    Console_execution.interface()
-)
+(
+    video_path,
+    csv_file,
+    input_timecode01,
+    input_timecode02,
+    csv_file_timeline,
+) = Console_execution.interface()
 
 Test_timeline.creation_timeline(csv_file_timeline)
 
@@ -772,9 +776,9 @@ clusters_fixations(
 
 ### Extraction des données
 """
-pos_x: Liste des coordonnées X des clusters.  
-pos_y: Liste des coordonnées Y des clusters.  
-counts: Liste des cardinalités des clusters.  
+pos_x: Liste des coordonnées X des clusters.
+pos_y: Liste des coordonnées Y des clusters.
+counts: Liste des cardinalités des clusters.
 fixation_order: Ordre temporel des clusters. """
 
 fixation_order = list(range(1, len(pos_x) + 1))

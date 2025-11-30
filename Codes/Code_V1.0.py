@@ -1074,9 +1074,9 @@ clusters_fixations(
 
 ### Extraction des données
 """
-pos_x: Liste des coordonnées X des clusters.  
-pos_y: Liste des coordonnées Y des clusters.  
-counts: Liste des cardinalités des clusters.  
+pos_x: Liste des coordonnées X des clusters.
+pos_y: Liste des coordonnées Y des clusters.
+counts: Liste des cardinalités des clusters.
 fixation_order: Ordre temporel des clusters. """
 
 fixation_order = list(range(1, len(pos_x) + 1))

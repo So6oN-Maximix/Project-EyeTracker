@@ -306,9 +306,13 @@ def clusters_fixations(size, X, Y, C, title1, title2, width=None, height=None):
 """ Fichier 21s : 20241015_0001_00.mp4 et 20241015_0001_00.csv
     Fichier 3m32s : 20250325_0001_00.mp4 et 20250325_0001_00.csv"""
 
-video_name, csv_file, input_timecode01, input_timecode02, csv_file_timeline = (
-    Console_execution.main()
-)
+(
+    video_name,
+    csv_file,
+    input_timecode01,
+    input_timecode02,
+    csv_file_timeline,
+) = Console_execution.main()
 
 Test_timeline.creation_timeline(csv_file_timeline)
 
