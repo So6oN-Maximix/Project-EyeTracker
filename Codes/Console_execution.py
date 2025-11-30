@@ -3,17 +3,7 @@ import sys
 import shutil
 from pathlib import Path
 
-# On suppose que Test_timeline existe dans le même dossier
-# Si ce module n'est pas présent, il faudra adapter l'import
-try:
-    import Test_timeline
-    from Test_timeline import PROTECH_PATH
-except ImportError:
-    # Fallback pour le test si le module n'est pas là
-    print(
-        "Attention: Module 'Test_timeline' introuvable. Utilisation d'un chemin par défaut."
-    )
-    PROTECH_PATH = Path("./ProTech")
+PROTECH_PATH = Path(__file__).resolve().parent.parent
 
 
 def clear_folder(folder_path):
