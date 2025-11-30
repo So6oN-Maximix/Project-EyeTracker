@@ -7,23 +7,27 @@ import matplotlib.pyplot as plt
 import cv2
 import sys
 import os
+
+
 ############################ Fonction lecture et sauvegarde ############################
 def lecture(file_name):
-    datas=[]
-    with open(file_name,"r") as file:
-        doc=csv.reader(file)
+    datas = []
+    with open(file_name, "r") as file:
+        doc = csv.reader(file)
         for _ in range(6):
             next(doc)
         for line in doc:
             datas.append(line)
     return datas
 
-def colonne_suite(file,column_name):
-    index=0
-    for j in range(1,len(file[0])):
-        if file[0][j]==column_name:
-            index=j
+
+def colonne_suite(file, column_name):
+    index = 0
+    for j in range(1, len(file[0])):
+        if file[0][j] == column_name:
+            index = j
     return [line[index] for line in file[1:]]
+
 
 def insertion_valeurs(tableau, column, column_name):
     tableau.append([column_name])
@@ -31,7 +35,8 @@ def insertion_valeurs(tableau, column, column_name):
         tableau[-1].append(elem)
     return tableau
 
-def transpose(tableau,valeur_vide=""):
+
+def transpose(tableau, valeur_vide=""):
     max_len = max(len(line) for line in tableau)
 
     transposed_tableau = []
@@ -46,31 +51,50 @@ def transpose(tableau,valeur_vide=""):
 
     return transposed_tableau
 
+
 def sauvegarde(file_name, lines):
     lines = transpose(lines)
     dossier = os.path.dirname(__file__)
-    chemin_fichier = os.path.join(os.path.dirname(dossier)+"/outputs", file_name + ".csv")
+    chemin_fichier = os.path.join(
+        os.path.dirname(dossier) + "/outputs", file_name + ".csv"
+    )
 
-    with open(chemin_fichier, mode='w', newline='', encoding='utf-8') as f:
+    with open(chemin_fichier, mode="w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerows(lines)
 
     print(f"Fichier CSV enregistré : {chemin_fichier}")
 
-def display_graph(size,X,Y,S,C,colorbar_label,title,xlabel,ylabel,xlimit=None,ylimit=None,image=None,not_show=None):
+
+def display_graph(
+    size,
+    X,
+    Y,
+    S,
+    C,
+    colorbar_label,
+    title,
+    xlabel,
+    ylabel,
+    xlimit=None,
+    ylimit=None,
+    image=None,
+    not_show=None,
+):
     plt.figure(figsize=size)
-    plt.scatter(X, Y, s=S, c=C, cmap='YlOrRd', alpha=0.8)
+    plt.scatter(X, Y, s=S, c=C, cmap="YlOrRd", alpha=0.8)
     plt.colorbar(label=colorbar_label)
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.grid(True)
-    if xlimit and ylimit :
+    if xlimit and ylimit:
         plt.xlim(xlimit)
         plt.ylim(ylimit)
-        plt.gca().set_aspect('equal', adjustable='box')
+        plt.gca().set_aspect("equal", adjustable="box")
     if image:
-        plt.imshow(frame, aspect='equal', extent=(0, width, 0, height))
+        plt.imshow(frame, aspect="equal", extent=(0, width, 0, height))
+
 
 def extraire_frame_par_index(cap, frame_index):
     cap.set(cv2.CAP_PROP_POS_FRAMES, frame_index)
@@ -81,16 +105,60 @@ def extraire_frame_par_index(cap, frame_index):
         print(f"Erreur : frame non trouvée pour l'index {frame_index}.")
         return None
 
+
 def afficher_carte_chaleur_echelle(instants, width=None, height=None):
     for instant in instants:
-        subset_positions = np.array([pos for time, pos in zip(fixation_time_filtered, positions) if time <= instant])
+        subset_positions = np.array(
+            [
+                pos
+                for time, pos in zip(fixation_time_filtered, positions)
+                if time <= instant
+            ]
+        )
         if len(subset_positions) > 0:
-            display_graph((8,6),subset_positions[:, 0], subset_positions[:, 1],50,"red",None,f"Carte de chaleur - Instant: {instant} ms","Gaze2dX(pixel)","Gaze2dY(pixel)")
-            if width and height :
-                display_graph((8, 6), subset_positions[:, 0], subset_positions[:, 1], 50, "red", None,f"Carte de chaleur - Instant: {instant} ms", "Gaze2dX(pixel)", "Gaze2dY(pixel)", (0, width),(0, height))
-                display_graph((8, 6), subset_positions[:, 0], subset_positions[:, 1], 10, "red", None,f"Carte de chaleur - Instant: {instant} ms", "Gaze2dX(pixel)", "Gaze2dY(pixel)",(-width, 2 * width), (-height, 2 * height))
+            display_graph(
+                (8, 6),
+                subset_positions[:, 0],
+                subset_positions[:, 1],
+                50,
+                "red",
+                None,
+                f"Carte de chaleur - Instant: {instant} ms",
+                "Gaze2dX(pixel)",
+                "Gaze2dY(pixel)",
+            )
+            if width and height:
+                display_graph(
+                    (8, 6),
+                    subset_positions[:, 0],
+                    subset_positions[:, 1],
+                    50,
+                    "red",
+                    None,
+                    f"Carte de chaleur - Instant: {instant} ms",
+                    "Gaze2dX(pixel)",
+                    "Gaze2dY(pixel)",
+                    (0, width),
+                    (0, height),
+                )
+                display_graph(
+                    (8, 6),
+                    subset_positions[:, 0],
+                    subset_positions[:, 1],
+                    10,
+                    "red",
+                    None,
+                    f"Carte de chaleur - Instant: {instant} ms",
+                    "Gaze2dX(pixel)",
+                    "Gaze2dY(pixel)",
+                    (-width, 2 * width),
+                    (-height, 2 * height),
+                )
 
-def afficher_carte_chaleur_avec_video(instants, video_path, media_frame_indices, media_timestamps, positions):
+
+def afficher_carte_chaleur_avec_video(
+    instants, video_path, media_frame_indices, media_timestamps, positions
+):
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print("Erreur : impossible d'ouvrir la vidéo.")
@@ -107,23 +175,91 @@ def afficher_carte_chaleur_avec_video(instants, video_path, media_frame_indices,
             continue
 
         height, width, _ = frame.shape
-        subset_positions = np.array([[pos[0], height - pos[1]] for pos, time in zip(positions, fixation_time_filtered) if time <= instant])
+        subset_positions = np.array(
+            [
+                [pos[0], height - pos[1]]
+                for pos, time in zip(positions, fixation_time_filtered)
+                if time <= instant
+            ]
+        )
 
         if len(subset_positions) > 0:
-            display_graph((8, 6), subset_positions[:, 0], subset_positions[:, 1], 50, "red", None,f"Carte de chaleur - Instant: {instant:.2f} ms", "Gaze2dX(pixel)", "Gaze2dY(pixel)",(0, width),(0, height),1)
-            display_graph((8, 6), subset_positions[:, 0], subset_positions[:, 1], 10, "red",None,f"Carte de chaleur superposée - Instant: {instant:.2f} ms", "Gaze2dX(pixel)","Gaze2dY(pixel)", (-width, 2 * width), (-height, 2 * height),1)
+            display_graph(
+                (8, 6),
+                subset_positions[:, 0],
+                subset_positions[:, 1],
+                50,
+                "red",
+                None,
+                f"Carte de chaleur - Instant: {instant:.2f} ms",
+                "Gaze2dX(pixel)",
+                "Gaze2dY(pixel)",
+                (0, width),
+                (0, height),
+                1,
+            )
+            display_graph(
+                (8, 6),
+                subset_positions[:, 0],
+                subset_positions[:, 1],
+                10,
+                "red",
+                None,
+                f"Carte de chaleur superposée - Instant: {instant:.2f} ms",
+                "Gaze2dX(pixel)",
+                "Gaze2dY(pixel)",
+                (-width, 2 * width),
+                (-height, 2 * height),
+                1,
+            )
 
     cap.release()
 
+
 def afficher_carte_chaleur_echelle_image(instants, width, height):
     for instant in instants:
-        subset_positions = np.array([pos for time, pos in zip(fixation_time_filtered, positions) if time <= instant])
+        subset_positions = np.array(
+            [
+                pos
+                for time, pos in zip(fixation_time_filtered, positions)
+                if time <= instant
+            ]
+        )
         if len(subset_positions) > 0:
-            adjusted_positions = np.array([[pos[0], height - pos[1]] for pos in subset_positions])
-            display_graph((8,6),adjusted_positions[:, 0], adjusted_positions[:, 1],50,"red",None,f"Carte de chaleur - Instant: {instant} ms (Échelle Image)","Gaze2dX(pixel)","Gaze2dY(pixel)",(0, width),(0, height))
-            display_graph((8, 6), adjusted_positions[:, 0], adjusted_positions[:, 1], 10, "red",None,f"Carte de chaleur - Instant: {instant} ms (Échelle Image)", "Gaze2dX(pixel)","Gaze2dY(pixel)", (-width, 2 * width), (-height, 2 * height))
+            adjusted_positions = np.array(
+                [[pos[0], height - pos[1]] for pos in subset_positions]
+            )
+            display_graph(
+                (8, 6),
+                adjusted_positions[:, 0],
+                adjusted_positions[:, 1],
+                50,
+                "red",
+                None,
+                f"Carte de chaleur - Instant: {instant} ms (Échelle Image)",
+                "Gaze2dX(pixel)",
+                "Gaze2dY(pixel)",
+                (0, width),
+                (0, height),
+            )
+            display_graph(
+                (8, 6),
+                adjusted_positions[:, 0],
+                adjusted_positions[:, 1],
+                10,
+                "red",
+                None,
+                f"Carte de chaleur - Instant: {instant} ms (Échelle Image)",
+                "Gaze2dX(pixel)",
+                "Gaze2dY(pixel)",
+                (-width, 2 * width),
+                (-height, 2 * height),
+            )
 
-def afficher_carte_chaleur_avec_derniere_frame_valide(tfinal_stamp, video_path, media_frame_indices, media_time_stamp, positions):
+
+def afficher_carte_chaleur_avec_derniere_frame_valide(
+    tfinal_stamp, video_path, media_frame_indices, media_time_stamp, positions
+):
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print("Erreur : impossible d'ouvrir la vidéo.")
@@ -146,21 +282,68 @@ def afficher_carte_chaleur_avec_derniere_frame_valide(tfinal_stamp, video_path, 
         return
 
     height, width, _ = last_frame.shape
-    subset_positions = np.array([[pos[0], height - pos[1]] for pos, time in zip(positions, fixation_time_filtered) if time <= tfinal_stamp])
+    subset_positions = np.array(
+        [
+            [pos[0], height - pos[1]]
+            for pos, time in zip(positions, fixation_time_filtered)
+            if time <= tfinal_stamp
+        ]
+    )
 
     if len(subset_positions) > 0:
-        display_graph((8,6),subset_positions[:, 0], subset_positions[:, 1],50,"red",None,f"Carte de chaleur superposée - Dernière frame valide à l'instant final","Gaze2dX(pixel)","Gaze2dY(pixel)",(0, width),(0, height),1)
-        display_graph((8,6),subset_positions[:, 0], subset_positions[:, 1],10,"red",None,f"Carte de chaleur superposée - Dernière frame valide à l'instant final","Gaze2dX(pixel)","Gaze2dY(pixel)",(-width, 2 * width),(-height, 2 * height),1)
+        display_graph(
+            (8, 6),
+            subset_positions[:, 0],
+            subset_positions[:, 1],
+            50,
+            "red",
+            None,
+            f"Carte de chaleur superposée - Dernière frame valide à l'instant final",
+            "Gaze2dX(pixel)",
+            "Gaze2dY(pixel)",
+            (0, width),
+            (0, height),
+            1,
+        )
+        display_graph(
+            (8, 6),
+            subset_positions[:, 0],
+            subset_positions[:, 1],
+            10,
+            "red",
+            None,
+            f"Carte de chaleur superposée - Dernière frame valide à l'instant final",
+            "Gaze2dX(pixel)",
+            "Gaze2dY(pixel)",
+            (-width, 2 * width),
+            (-height, 2 * height),
+            1,
+        )
 
     cap.release()
 
-def afficher_carte_chaleur_avec_video_pour_instant(instant, video_path, media_frame_indices, media_timestamps, positions, tolerance=1e-6):
+
+def afficher_carte_chaleur_avec_video_pour_instant(
+    instant,
+    video_path,
+    media_frame_indices,
+    media_timestamps,
+    positions,
+    tolerance=1e-6,
+):
     cap = cv2.VideoCapture(video_path)
     if not cap.isOpened():
         print("Erreur : impossible d'ouvrir la vidéo.")
         return
 
-    index = next((i for i, ts in enumerate(media_timestamps) if np.isclose(ts, instant, atol=tolerance)), None)
+    index = next(
+        (
+            i
+            for i, ts in enumerate(media_timestamps)
+            if np.isclose(ts, instant, atol=tolerance)
+        ),
+        None,
+    )
     if index is None:
         print(f"Instant {instant} non trouvé dans les timestamps.")
         return
@@ -172,19 +355,61 @@ def afficher_carte_chaleur_avec_video_pour_instant(instant, video_path, media_fr
         return
 
     height, width, _ = frame.shape
-    subset_positions = np.array([[pos[0], height - pos[1]] for pos, time in zip(positions, fixation_time_filtered) if time <= instant])
+    subset_positions = np.array(
+        [
+            [pos[0], height - pos[1]]
+            for pos, time in zip(positions, fixation_time_filtered)
+            if time <= instant
+        ]
+    )
 
     if len(subset_positions) > 0:
-        display_graph((8,6),subset_positions[:, 0], subset_positions[:, 1],50,"red",None,f"Carte de chaleur superposée - Instant: {instant:.6f} ms","Gaze2dX(pixel)","Gaze2dY(pixel)",(0, width),(0, height),1)
-        display_graph((8,6),subset_positions[:, 0], subset_positions[:, 1],10,"red",None,f"Carte de chaleur superposée - Instant: {instant:.6f} ms","Gaze2dX(pixel)","Gaze2dY(pixel)",(-width, 2 * width),(-height, 2 * height),1)
+        display_graph(
+            (8, 6),
+            subset_positions[:, 0],
+            subset_positions[:, 1],
+            50,
+            "red",
+            None,
+            f"Carte de chaleur superposée - Instant: {instant:.6f} ms",
+            "Gaze2dX(pixel)",
+            "Gaze2dY(pixel)",
+            (0, width),
+            (0, height),
+            1,
+        )
+        display_graph(
+            (8, 6),
+            subset_positions[:, 0],
+            subset_positions[:, 1],
+            10,
+            "red",
+            None,
+            f"Carte de chaleur superposée - Instant: {instant:.6f} ms",
+            "Gaze2dX(pixel)",
+            "Gaze2dY(pixel)",
+            (-width, 2 * width),
+            (-height, 2 * height),
+            1,
+        )
 
     cap.release()
 
-def extraire_donnees_utiles_excel(file_name, instants, media_frame_indices, media_time_stamp, positions):
+
+def extraire_donnees_utiles_excel(
+    file_name, instants, media_frame_indices, media_time_stamp, positions
+):
     feuille = []
 
     insertion_valeurs(feuille, instants, "Instants (ms)")
-    frame_indices = [media_frame_indices[media_time_stamp.index(instant)] if instant in media_time_stamp else None for instant in instants]
+    frame_indices = [
+        (
+            media_frame_indices[media_time_stamp.index(instant)]
+            if instant in media_time_stamp
+            else None
+        )
+        for instant in instants
+    ]
     insertion_valeurs(feuille, frame_indices, "Frame Indices")
     insertion_valeurs(feuille, media_time_stamp, "Media TimeStamp (ms)")
     pos_x = [pos[0] for pos in positions]
@@ -193,11 +418,21 @@ def extraire_donnees_utiles_excel(file_name, instants, media_frame_indices, medi
     insertion_valeurs(feuille, pos_y, "Gaze2dY (pixel)")
 
     sauvegarde(file_name, feuille)
-    print(f"Les données utiles ont été extraites et sauvegardées dans le fichier {file_name}.xlsx")
+    print(
+        f"Les données utiles ont été extraites et sauvegardées dans le fichier {file_name}.xlsx"
+    )
 
-def exporter_donnees_clusters_avec_ordre(pos_x, pos_y, counts, fixation_order, filename="Clusters_Fixation_Ordre"):
-    sheet = [["Gaze2dX (pixel)"], ["Gaze2dY (pixel)"], ["counts"], ["ordre des clusters"]]
-    for i in range (len(pos_x)):
+
+def exporter_donnees_clusters_avec_ordre(
+    pos_x, pos_y, counts, fixation_order, filename="Clusters_Fixation_Ordre"
+):
+    sheet = [
+        ["Gaze2dX (pixel)"],
+        ["Gaze2dY (pixel)"],
+        ["counts"],
+        ["ordre des clusters"],
+    ]
+    for i in range(len(pos_x)):
         sheet[0].append(pos_x[i])
         sheet[1].append(pos_y[i])
         sheet[2].append(counts[i])
@@ -205,57 +440,183 @@ def exporter_donnees_clusters_avec_ordre(pos_x, pos_y, counts, fixation_order, f
     sauvegarde(filename, sheet)
     print(f"Données avec ordre exportées avec succès dans le fichier {filename}.")
 
-def display_graph_arrow(size,X,Y,S,C,colorbar_label,title,xlabel,ylabel,hwidth,hlength,xlimit=None,ylimit=None):
-    display_graph(size,X,Y,S,C,colorbar_label,title,xlabel,ylabel,not_show=True)
+
+def display_graph_arrow(
+    size,
+    X,
+    Y,
+    S,
+    C,
+    colorbar_label,
+    title,
+    xlabel,
+    ylabel,
+    hwidth,
+    hlength,
+    xlimit=None,
+    ylimit=None,
+):
+    display_graph(
+        size, X, Y, S, C, colorbar_label, title, xlabel, ylabel, not_show=True
+    )
     for idx, (x, y) in enumerate(zip(X, Y)):
-        plt.text(x, y, str(idx + 1), fontsize=12, ha='center', va='center', color='black')
+        plt.text(
+            x, y, str(idx + 1), fontsize=12, ha="center", va="center", color="black"
+        )
     previous_position = None
-    for i, (current_x, current_y) in enumerate(zip(X,Y)):
+    for i, (current_x, current_y) in enumerate(zip(X, Y)):
         if previous_position is not None:
-            plt.arrow(previous_position[0], previous_position[1],
-                      current_x - previous_position[0], current_y - previous_position[1],
-                      head_width=hwidth, head_length=hlength, fc='blue', ec='blue', length_includes_head=True)
+            plt.arrow(
+                previous_position[0],
+                previous_position[1],
+                current_x - previous_position[0],
+                current_y - previous_position[1],
+                head_width=hwidth,
+                head_length=hlength,
+                fc="blue",
+                ec="blue",
+                length_includes_head=True,
+            )
         previous_position = (current_x, current_y)
-    plt.gca().set_aspect('equal', adjustable='box')
+    plt.gca().set_aspect("equal", adjustable="box")
     if xlimit and ylimit:
         plt.xlim(xlimit)
         plt.ylim(ylimit)
     plt.show()
 
-def clusters_fixations(size,X,Y,C,title1,title2,width=None,height=None):
-    display_graph_arrow(size, X, Y, 800, C, "Nombre de Fixations",title1, "Gaze2dX(pixel)","Gaze2dY(pixel)",0.005,0.01)
-    display_graph_arrow(size, X, Y, 800, C, "Nombre de Fixations",title1 + " : echelle video", "Gaze2dX(pixel)","Gaze2dY(pixel)",0.005,0.01, (0, width), (0, height))
-    display_graph_arrow(size, X, Y, 200, C, "Nombre de Fixations",title1 + " : echelle etendue", "Gaze2dX(pixel)","Gaze2dY(pixel)",0.005,0.01, (-width, 2 * width), (-height, 2 * height))
+
+def clusters_fixations(size, X, Y, C, title1, title2, width=None, height=None):
+    display_graph_arrow(
+        size,
+        X,
+        Y,
+        800,
+        C,
+        "Nombre de Fixations",
+        title1,
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        0.005,
+        0.01,
+    )
+    display_graph_arrow(
+        size,
+        X,
+        Y,
+        800,
+        C,
+        "Nombre de Fixations",
+        title1 + " : echelle video",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        0.005,
+        0.01,
+        (0, width),
+        (0, height),
+    )
+    display_graph_arrow(
+        size,
+        X,
+        Y,
+        200,
+        C,
+        "Nombre de Fixations",
+        title1 + " : echelle etendue",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        0.005,
+        0.01,
+        (-width, 2 * width),
+        (-height, 2 * height),
+    )
 
     if last_frame is not None:
         adjusted_pos_y = height - np.array(Y)
 
-        display_graph_arrow(size, X, adjusted_pos_y, 800, C,"Nombre de Fixations",title2,"Gaze2dX(pixel)", "Gaze2dY(pixel)", 10, 15, (0, width), (0, height))
-        display_graph_arrow(size, X, adjusted_pos_y, 200, C,"Nombre de Fixations",title2,"Gaze2dX(pixel)", "Gaze2dY(pixel)", 10, 15, (-width, 2 * width), (-height, 2 * height))
-        display_graph_arrow(size, X, adjusted_pos_y, 800, C,"Nombre de Fixations",title1 + " (Échelle Image)","Gaze2dX(pixel)", "Gaze2dY(pixel)", 0.005, 0.01, (0, width), (0, height))
-        display_graph_arrow(size, X, adjusted_pos_y, 200, C,"Nombre de Fixations",title1 + " (Échelle Étendue)","Gaze2dX(pixel)", "Gaze2dY(pixel)", 0.005, 0.01, (-width, 2 * width), (-height, 2 * height))
+        display_graph_arrow(
+            size,
+            X,
+            adjusted_pos_y,
+            800,
+            C,
+            "Nombre de Fixations",
+            title2,
+            "Gaze2dX(pixel)",
+            "Gaze2dY(pixel)",
+            10,
+            15,
+            (0, width),
+            (0, height),
+        )
+        display_graph_arrow(
+            size,
+            X,
+            adjusted_pos_y,
+            200,
+            C,
+            "Nombre de Fixations",
+            title2,
+            "Gaze2dX(pixel)",
+            "Gaze2dY(pixel)",
+            10,
+            15,
+            (-width, 2 * width),
+            (-height, 2 * height),
+        )
+        display_graph_arrow(
+            size,
+            X,
+            adjusted_pos_y,
+            800,
+            C,
+            "Nombre de Fixations",
+            title1 + " (Échelle Image)",
+            "Gaze2dX(pixel)",
+            "Gaze2dY(pixel)",
+            0.005,
+            0.01,
+            (0, width),
+            (0, height),
+        )
+        display_graph_arrow(
+            size,
+            X,
+            adjusted_pos_y,
+            200,
+            C,
+            "Nombre de Fixations",
+            title1 + " (Échelle Étendue)",
+            "Gaze2dX(pixel)",
+            "Gaze2dY(pixel)",
+            0.005,
+            0.01,
+            (-width, 2 * width),
+            (-height, 2 * height),
+        )
 
     else:
         print("Impossible d'extraire la dernière frame de la vidéo.")
+
+
 ############################ lecture fichier ###########
 """ Fichier 21s : 20241015_0001_00.mp4 et 20241015_0001_00.csv
     Fichier 3m32s : 20250325_0001_00.mp4 et 20250325_0001_00.csv"""
 
-fichier=lecture(sys.argv[1])
-video_path=sys.argv[2]
+fichier = lecture(sys.argv[1])
+video_path = sys.argv[2]
 ############################ lecture variables ###########
-gaze2dx=colonne_suite(fichier,"Gaze2dX")
-gaze2dy=colonne_suite(fichier,"Gaze2dY")
-gaze_class=colonne_suite(fichier,"GazeClass")
-blink=colonne_suite(fichier,"Blink")
-MediaTimeStamp=colonne_suite(fichier,"MediaTimeStamp")
-gaze_right_reciprocal_distance=colonne_suite(fichier,"GazeRightReciprocalDistance")
-gaze_left_reciprocal_distance=colonne_suite(fichier,"GazeLeftReciprocalDistance")
-confidence=colonne_suite(fichier,"Confidence")
-vergence=colonne_suite(fichier,"VergenceAngle")
-media_frame_indices=colonne_suite(fichier,"MediaFrameIndex")
+gaze2dx = colonne_suite(fichier, "Gaze2dX")
+gaze2dy = colonne_suite(fichier, "Gaze2dY")
+gaze_class = colonne_suite(fichier, "GazeClass")
+blink = colonne_suite(fichier, "Blink")
+MediaTimeStamp = colonne_suite(fichier, "MediaTimeStamp")
+gaze_right_reciprocal_distance = colonne_suite(fichier, "GazeRightReciprocalDistance")
+gaze_left_reciprocal_distance = colonne_suite(fichier, "GazeLeftReciprocalDistance")
+confidence = colonne_suite(fichier, "Confidence")
+vergence = colonne_suite(fichier, "VergenceAngle")
+media_frame_indices = colonne_suite(fichier, "MediaFrameIndex")
 ############################ Nettoyage variables de gaze ###########
-fixations_idx = [i for i, gclass in enumerate(gaze_class) if gclass == 'F']
+fixations_idx = [i for i, gclass in enumerate(gaze_class) if gclass == "F"]
 fixation_gaze2dx = [gaze2dx[i] for i in fixations_idx]
 fixation_gaze2dy = [gaze2dy[i] for i in fixations_idx]
 fixation_gaze2dx_filtered = []
@@ -287,7 +648,9 @@ for t in fixation_time_stamp:
         fixation_time_filtered.append(float(t))
     except ValueError:
         pass
-index_label_mapping = {fixations_idx[i]: labels[i] for i in range(len(fixations_idx)) if i < len(labels)}
+index_label_mapping = {
+    fixations_idx[i]: labels[i] for i in range(len(fixations_idx)) if i < len(labels)
+}
 fixation_times = []
 for i in range(len(fixation_time_filtered) - 1):
     current_idx = fixations_idx[i]
@@ -304,7 +667,8 @@ cluster_fixation_time = {}
 for label in set(labels):
     if label != -1:
         cluster_fixation_time[label] = sum(
-            fixation_times[i] for i, fix_idx in enumerate(fixations_idx[:-1])
+            fixation_times[i]
+            for i, fix_idx in enumerate(fixations_idx[:-1])
             if fix_idx in index_label_mapping and index_label_mapping[fix_idx] == label
         )
 ############################ Visualisation échelle des données ############################
@@ -312,7 +676,17 @@ if len(clusters) > 0:
     pos_x, pos_y = zip(*clusters.keys())
     counts = list(clusters.values())
 
-    display_graph((8,6),pos_x,pos_y,800,counts,"Nombre de Fixations","Clusters de Fixation","Gaze2dX(pixel)","Gaze2dY(pixel)")
+    display_graph(
+        (8, 6),
+        pos_x,
+        pos_y,
+        800,
+        counts,
+        "Nombre de Fixations",
+        "Clusters de Fixation",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+    )
 else:
     print("Aucun cluster n'a été trouvé.")
     sys.exit()
@@ -338,8 +712,32 @@ cap.release()
 ### Echelle vidéo
 height, width, _ = last_frame.shape
 
-display_graph((8,6),pos_x,pos_y,800,counts,"Nombre de Fixations","Clusters de Fixation (échelle video)","Gaze2dX(pixel)","Gaze2dY(pixel)",(0, width),(0, height))
-display_graph((8,6),pos_x,pos_y,200,counts,"Nombre de Fixations","Clusters de Fixation (echelle etendue)","Gaze2dX(pixel)","Gaze2dY(pixel)",(-1 * width, 2 * width),(-1 * height, 2 * height))
+display_graph(
+    (8, 6),
+    pos_x,
+    pos_y,
+    800,
+    counts,
+    "Nombre de Fixations",
+    "Clusters de Fixation (échelle video)",
+    "Gaze2dX(pixel)",
+    "Gaze2dY(pixel)",
+    (0, width),
+    (0, height),
+)
+display_graph(
+    (8, 6),
+    pos_x,
+    pos_y,
+    200,
+    counts,
+    "Nombre de Fixations",
+    "Clusters de Fixation (echelle etendue)",
+    "Gaze2dX(pixel)",
+    "Gaze2dY(pixel)",
+    (-1 * width, 2 * width),
+    (-1 * height, 2 * height),
+)
 ############################ Visualisation avec frame vidéo ############################
 
 ### Echelle vidéo
@@ -349,7 +747,20 @@ if last_frame is not None:
     inverted_frame = np.flipud(last_frame)
 
     adjusted_pos_y = height - np.array(pos_y)
-    display_graph((10, 8), pos_x, adjusted_pos_y, 800, counts, "Nombre de Fixations","Superposition de la Dernière Frame avec les Clusters", "Gaze2dX(pixel)", "Gaze2dY(pixel)",(0, width),(0, height),1)
+    display_graph(
+        (10, 8),
+        pos_x,
+        adjusted_pos_y,
+        800,
+        counts,
+        "Nombre de Fixations",
+        "Superposition de la Dernière Frame avec les Clusters",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (0, width),
+        (0, height),
+        1,
+    )
 else:
     print("Impossible d'extraire la dernière frame de la vidéo.")
 
@@ -360,7 +771,20 @@ if last_frame is not None:
     inverted_frame = np.flipud(last_frame)
 
     adjusted_pos_y = height - np.array(pos_y)
-    display_graph((10,8),pos_x, adjusted_pos_y,200,counts,"Nombre de Fixations","Superposition de la Dernière Frame avec les Clusters","Gaze2dX(pixel)","Gaze2dY(pixel)",(-1 * width, 2 * width),(-1 * height, 2 * height),1)
+    display_graph(
+        (10, 8),
+        pos_x,
+        adjusted_pos_y,
+        200,
+        counts,
+        "Nombre de Fixations",
+        "Superposition de la Dernière Frame avec les Clusters",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (-1 * width, 2 * width),
+        (-1 * height, 2 * height),
+        1,
+    )
 else:
     print("Impossible d'extraire la dernière frame de la vidéo.")
 
@@ -368,7 +792,19 @@ else:
 
 if last_frame is not None:
     adjusted_pos_y = height - np.array(pos_y)
-    display_graph((10,8),pos_x, adjusted_pos_y,800,counts,"Nombre de Fixations","Clusters de Fixation ajustés à l'échelle de l'image","Gaze2dX(pixel)","Gaze2dY(pixel)",(0, width),(0, height))
+    display_graph(
+        (10, 8),
+        pos_x,
+        adjusted_pos_y,
+        800,
+        counts,
+        "Nombre de Fixations",
+        "Clusters de Fixation ajustés à l'échelle de l'image",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (0, width),
+        (0, height),
+    )
 else:
     print("Impossible d'extraire les dimensions de l'image.")
 
@@ -376,7 +812,19 @@ else:
 
 if last_frame is not None:
     adjusted_pos_y = height - np.array(pos_y)
-    display_graph((10,8),pos_x, adjusted_pos_y,200,counts,"Nombre de Fixations","Clusters de Fixation ajustés à l'échelle de l'image","Gaze2dX(pixel)","Gaze2dY(pixel)",(-width, 2*width),(-height, 2*height))
+    display_graph(
+        (10, 8),
+        pos_x,
+        adjusted_pos_y,
+        200,
+        counts,
+        "Nombre de Fixations",
+        "Clusters de Fixation ajustés à l'échelle de l'image",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (-width, 2 * width),
+        (-height, 2 * height),
+    )
 else:
     print("Impossible d'extraire les dimensions de l'image.")
 
@@ -388,9 +836,9 @@ if len(clusters) > 0:
 
     feuille = []
 
-    insertion_valeurs(feuille, pos_x,"Gaze2dX (pixel)")
-    insertion_valeurs(feuille, pos_y,"Gaze2dY (pixel)")
-    insertion_valeurs(feuille, counts,"Nombre de Fixations")
+    insertion_valeurs(feuille, pos_x, "Gaze2dX (pixel)")
+    insertion_valeurs(feuille, pos_y, "Gaze2dY (pixel)")
+    insertion_valeurs(feuille, counts, "Nombre de Fixations")
 
     image_width = [width] * len(pos_x)
     image_height = [height] * len(pos_y)
@@ -408,9 +856,43 @@ if len(cluster_fixation_time) > 0:
     pos_x, pos_y = zip(*clusters.keys())
     times = list(cluster_fixation_time.values())
 
-    display_graph((8,6),pos_x,pos_y,800,times,"Temps de fixation cumulé (ms)","Temps de Fixation cumulé par Cluster","Gaze2dX(pixel)","Gaze2dY(pixel)")
-    display_graph((8, 6), pos_x, pos_y, 800, times, "Temps de fixation cumulé (ms)","Temps de Fixation cumulé par Cluster échelle video", "Gaze2dX(pixel)", "Gaze2dY(pixel)", (0, width),(0, height))
-    display_graph((8, 6), pos_x, pos_y, 200, times, "Temps de fixation cumulé (ms)","Temps de Fixation cumulé par Cluster échelle etendue", "Gaze2dX(pixel)", "Gaze2dY(pixel)",(-1 * width, 2 * width), (-1 * height, 2 * height))
+    display_graph(
+        (8, 6),
+        pos_x,
+        pos_y,
+        800,
+        times,
+        "Temps de fixation cumulé (ms)",
+        "Temps de Fixation cumulé par Cluster",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+    )
+    display_graph(
+        (8, 6),
+        pos_x,
+        pos_y,
+        800,
+        times,
+        "Temps de fixation cumulé (ms)",
+        "Temps de Fixation cumulé par Cluster échelle video",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (0, width),
+        (0, height),
+    )
+    display_graph(
+        (8, 6),
+        pos_x,
+        pos_y,
+        200,
+        times,
+        "Temps de fixation cumulé (ms)",
+        "Temps de Fixation cumulé par Cluster échelle etendue",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (-1 * width, 2 * width),
+        (-1 * height, 2 * height),
+    )
 else:
     print("Aucun cluster n'a été trouvé.")
     sys.exit()
@@ -421,10 +903,60 @@ if last_frame is not None:
     height, width, _ = last_frame.shape
     adjusted_pos_y = height - np.array(pos_y)
 
-    display_graph((10, 8), pos_x, adjusted_pos_y, 800, times, "Temps de fixation cumulé (ms)","Superposition de la Dernière Frame avec les Clusters", "Gaze2dX(pixel)", "Gaze2dY(pixel)",(0, width),(0, height),1)
-    display_graph((10, 8), pos_x, adjusted_pos_y, 200, times, "Temps de fixation cumulé (ms)","Superposition de la Dernière Frame avec les Clusters", "Gaze2dX(pixel)", "Gaze2dY(pixel)",(-1*width, 2*width),(-height, 2*height),1)
-    display_graph((10, 8), pos_x, adjusted_pos_y, 800, times, "Temps de fixation cumulé (ms)","Temps de Fixation cumulé par Cluster (échelle image)", "Gaze2dX(pixel)", "Gaze2dY(pixel)",(0, width),(0, height))
-    display_graph((10, 8), pos_x, adjusted_pos_y, 200, times, "Temps de fixation cumulé (ms)","Temps de Fixation cumulé par Cluster (échelle image)", "Gaze2dX(pixel)", "Gaze2dY(pixel)",(-width, 2*width),(-height, 2*height))
+    display_graph(
+        (10, 8),
+        pos_x,
+        adjusted_pos_y,
+        800,
+        times,
+        "Temps de fixation cumulé (ms)",
+        "Superposition de la Dernière Frame avec les Clusters",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (0, width),
+        (0, height),
+        1,
+    )
+    display_graph(
+        (10, 8),
+        pos_x,
+        adjusted_pos_y,
+        200,
+        times,
+        "Temps de fixation cumulé (ms)",
+        "Superposition de la Dernière Frame avec les Clusters",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (-1 * width, 2 * width),
+        (-height, 2 * height),
+        1,
+    )
+    display_graph(
+        (10, 8),
+        pos_x,
+        adjusted_pos_y,
+        800,
+        times,
+        "Temps de fixation cumulé (ms)",
+        "Temps de Fixation cumulé par Cluster (échelle image)",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (0, width),
+        (0, height),
+    )
+    display_graph(
+        (10, 8),
+        pos_x,
+        adjusted_pos_y,
+        200,
+        times,
+        "Temps de fixation cumulé (ms)",
+        "Temps de Fixation cumulé par Cluster (échelle image)",
+        "Gaze2dX(pixel)",
+        "Gaze2dY(pixel)",
+        (-width, 2 * width),
+        (-height, 2 * height),
+    )
 else:
     print("Impossible d'extraire la dernière frame de la vidéo.")
 
@@ -437,7 +969,7 @@ if len(clusters) > 0 and len(cluster_fixation_time) > 0:
 
     feuille = []
 
-    insertion_valeurs(feuille, pos_x,"Gaze2dX (pixel)")
+    insertion_valeurs(feuille, pos_x, "Gaze2dX (pixel)")
     insertion_valeurs(feuille, pos_y, "Gaze2dY (pixel)")
     insertion_valeurs(feuille, counts, "Nombre de Fixations")
     insertion_valeurs(feuille, times, "Temps de Fixation cumulé (ms)")
@@ -454,12 +986,17 @@ else:
 
 ### Echelle données
 
-media_frame_indices = [int(idx) for idx in media_frame_indices if idx not in [None, 'NA']]
-media_time_stamp = [float(ts) for ts in MediaTimeStamp if ts not in [None, 'NA']]
-positions = np.array([
-    [float(gaze2dx[i]), float(gaze2dy[i])]
-    for i in fixations_idx if gaze2dx[i] not in [None, 'NA'] and gaze2dy[i] not in [None, 'NA']
-])
+media_frame_indices = [
+    int(idx) for idx in media_frame_indices if idx not in [None, "NA"]
+]
+media_time_stamp = [float(ts) for ts in MediaTimeStamp if ts not in [None, "NA"]]
+positions = np.array(
+    [
+        [float(gaze2dx[i]), float(gaze2dy[i])]
+        for i in fixations_idx
+        if gaze2dx[i] not in [None, "NA"] and gaze2dy[i] not in [None, "NA"]
+    ]
+)
 
 ### Def des temps
 
@@ -470,26 +1007,36 @@ tfinal = fixation_time_filtered[-1]
 ### Affichage graphs
 
 afficher_carte_chaleur_echelle([t0], width, height)
-afficher_carte_chaleur_avec_video([t0], video_path, media_frame_indices, media_time_stamp, positions)
+afficher_carte_chaleur_avec_video(
+    [t0], video_path, media_frame_indices, media_time_stamp, positions
+)
 afficher_carte_chaleur_echelle_image([t0], width, height)
 ############################ Carte de Chaleur (tmilieu) ############################
 afficher_carte_chaleur_echelle([tmilieu], width, height)
-afficher_carte_chaleur_avec_video([tmilieu], video_path, media_frame_indices, media_time_stamp, positions)
+afficher_carte_chaleur_avec_video(
+    [tmilieu], video_path, media_frame_indices, media_time_stamp, positions
+)
 afficher_carte_chaleur_echelle_image([tmilieu], width, height)
 ############################ Carte de Chaleur (tfinal) ############################
 afficher_carte_chaleur_echelle([tfinal], width, height)
-afficher_carte_chaleur_avec_video([tfinal], video_path, media_frame_indices, media_time_stamp, positions)
-afficher_carte_chaleur_echelle_image([tfinal],width, height)
+afficher_carte_chaleur_avec_video(
+    [tfinal], video_path, media_frame_indices, media_time_stamp, positions
+)
+afficher_carte_chaleur_echelle_image([tfinal], width, height)
 ############################ Recherche dernière frame ############################
 
 #!! Si le dernier frame n'existe pas, on essaye de chercher les frames d'avant. Une fois trouvé, on la superpose avec la carte de chaleur finale
 
-afficher_carte_chaleur_avec_derniere_frame_valide(tfinal, video_path, media_frame_indices, media_time_stamp, positions)
+afficher_carte_chaleur_avec_derniere_frame_valide(
+    tfinal, video_path, media_frame_indices, media_time_stamp, positions
+)
 ############################ Carte de chaleur instant définie ############################
 random_instant = 4.335055784
 
 afficher_carte_chaleur_echelle([random_instant], width, height)
-afficher_carte_chaleur_avec_video_pour_instant(random_instant, video_path, media_frame_indices, media_time_stamp, positions)
+afficher_carte_chaleur_avec_video_pour_instant(
+    random_instant, video_path, media_frame_indices, media_time_stamp, positions
+)
 afficher_carte_chaleur_echelle_image([random_instant], width, height)
 
 ### Extraction des données
@@ -506,9 +1053,24 @@ Liste complète des timestamps disponibles dans les données.
 Positions des fixations (Gaze2dX (pixel) et Gaze2dY (pixel)) :
 Positions des fixations ((x), (y)) utilisées pour générer les cartes de chaleur."""
 
-extraire_donnees_utiles_excel("Donnees_cartes_de_chaleur",[t0, tmilieu,random_instant, tfinal],media_frame_indices,media_time_stamp,positions)
+extraire_donnees_utiles_excel(
+    "Donnees_cartes_de_chaleur",
+    [t0, tmilieu, random_instant, tfinal],
+    media_frame_indices,
+    media_time_stamp,
+    positions,
+)
 ############################ Cluster fixations avec couleur proportionnelles et flèches ############################
-clusters_fixations((10, 8), pos_x, pos_y,counts,"Clusters de Fixation et Flèches pour le Chemin","Superposition de la Dernière Frame avec les Clusters et Flèches pour le Chemin",width,height)
+clusters_fixations(
+    (10, 8),
+    pos_x,
+    pos_y,
+    counts,
+    "Clusters de Fixation et Flèches pour le Chemin",
+    "Superposition de la Dernière Frame avec les Clusters et Flèches pour le Chemin",
+    width,
+    height,
+)
 
 ### Extraction des données
 """
@@ -525,11 +1087,29 @@ filtered_clusters = {k: v for k, v in clusters.items() if v > seuil}
 filtered_pos_x, filtered_pos_y = zip(*filtered_clusters.keys())
 filtered_counts = list(filtered_clusters.values())
 
-clusters_fixations((10, 8), filtered_pos_x, filtered_pos_y,filtered_counts,f"Clusters de Fixation (> {seuil} positions) avec Flèches pour le Chemin",f"Superposition de la Dernière Frame avec les Clusters (> {seuil} positions)",width,height)
+clusters_fixations(
+    (10, 8),
+    filtered_pos_x,
+    filtered_pos_y,
+    filtered_counts,
+    f"Clusters de Fixation (> {seuil} positions) avec Flèches pour le Chemin",
+    f"Superposition de la Dernière Frame avec les Clusters (> {seuil} positions)",
+    width,
+    height,
+)
 ############################ Clusters de Fixation avec Couleur Proportionnelle et Flèches pour le Chemin (Taille Constante) en choisissant top_n plus grands clusters ############################
 top_n = 3
 top_clusters = sorted(clusters.items(), key=lambda x: x[1], reverse=True)[:top_n]
 top_pos_x, top_pos_y = zip(*[k for k, v in top_clusters])
 top_counts = [v for k, v in top_clusters]
 
-clusters_fixations((10, 8), top_pos_x, top_pos_y,top_counts,f"Top {top_n} Clusters de Fixation avec Flèches",f"Superposition de la Dernière Frame avec les Top {top_n} Clusters",width,height)
+clusters_fixations(
+    (10, 8),
+    top_pos_x,
+    top_pos_y,
+    top_counts,
+    f"Top {top_n} Clusters de Fixation avec Flèches",
+    f"Superposition de la Dernière Frame avec les Top {top_n} Clusters",
+    width,
+    height,
+)
