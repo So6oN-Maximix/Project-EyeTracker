@@ -2,6 +2,14 @@ import re
 import sys
 import shutil
 from pathlib import Path
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)],
+)
+logger = logging.getLogger("EyeTracker_Console")
 
 PROTECH_PATH = Path(__file__).resolve().parent.parent
 
@@ -10,13 +18,13 @@ def clear_folder(folder_path):
     dossier = Path(folder_path)
 
     if not dossier.exists():
-        print(f"Le dossier {dossier} n'existe pas, création en cours...")
+        logger.warning(f"\nLe dossier {dossier} n'existe pas, création en cours...")
         dossier.mkdir(parents=True, exist_ok=True)
         # On crée le sous-dossier Graphs immédiatement
         (dossier / "Graphs").mkdir(parents=True, exist_ok=True)
         return
 
-    print(f"Nettoyage du dossier : {dossier}")
+    logger.info(f"\nNettoyage du dossier : {dossier}")
     for item in dossier.iterdir():
         try:
             if item.is_dir():
@@ -24,7 +32,7 @@ def clear_folder(folder_path):
             else:
                 item.unlink()
         except Exception as e:
-            print(f"Impossible de supprimer {item.name} : {e}")
+            logger.error(f"Impossible de supprimer {item.name} : {e}")
 
     dossier_graphs = dossier / "Graphs"
     dossier_graphs.mkdir(parents=True, exist_ok=True)
@@ -40,7 +48,7 @@ def verifier_format_timecode(tc):
 def verifier_existence_fichier(chemin):
     p = Path(chemin)
     if not p.exists() or not p.is_file():
-        print(f"Erreur : Le fichier '{chemin}' n'existe pas.")
+        logger.error(f"Erreur : Le fichier '{chemin}' n'existe pas.")
         return False
     return True
 
@@ -50,7 +58,7 @@ def demander_saisie(message, validateur=None, erreur_msg="Entrée invalide"):
     while True:
         valeur = input(message).strip()
         if not valeur:
-            print("Erreur : La valeur ne peut pas être vide.")
+            logger.error("Erreur : La valeur ne peut pas être vide.")
             continue
 
         if validateur:
@@ -63,8 +71,8 @@ def demander_saisie(message, validateur=None, erreur_msg="Entrée invalide"):
 
 
 def main():
-    print(
-        "================================ CONFIGURATION ================================"
+    logger.info(
+        "\n================================ CONFIGURATION ================================"
     )
 
     video_path = demander_saisie(
@@ -82,10 +90,10 @@ def main():
     name_csv = Path(csv_path).stem
 
     if name_mp4 != name_csv:
-        print(f"ATTENTION : Les noms diffèrent ({name_mp4} vs {name_csv}).")
+        logger.waring(f"\nATTENTION : Les noms diffèrent ({name_mp4} vs {name_csv}).")
         confirm = input("Voulez-vous continuer quand même ? (o/n) : ")
         if confirm.lower() != "o":
-            print("Annulation.")
+            logger.info("\nAnnulation.")
             sys.exit(0)
 
     tc_start = demander_saisie(
@@ -110,18 +118,18 @@ def main():
         output_path = PROTECH_PATH / "Outputs"
         clear_folder(output_path)
     except Exception as e:
-        print(f"Erreur lors du nettoyage des dossiers : {e}")
+        logger.error(f"Erreur lors du nettoyage des dossiers : {e}")
         # On continue quand même ou on arrête selon le besoin
 
-    print(
+    logger.debug(
         "\n================================ DEBUT DE L'ANALYSE ================================"
     )
-    print(f"Vidéo   : {Path(video_path).name}")
-    print(f"Gaze    : {Path(csv_path).name}")
-    print(f"TC CSV  : {Path(csv_tc_path).name}")
-    print(f"Segment : {tc_start} -> {tc_end}")
-    print(
-        "===================================================================================="
+    logger.debug(f"\nVidéo   : {Path(video_path).name}")
+    logger.debug(f"\nGaze    : {Path(csv_path).name}")
+    logger.debug(f"\nTC CSV  : {Path(csv_tc_path).name}")
+    logger.debug(f"\nSegment : {tc_start} -> {tc_end}")
+    logger.debug(
+        "\n===================================================================================="
     )
 
     # Retourne les noms de fichiers comme demandé par la structure de l'ancien script
