@@ -19,7 +19,7 @@ def verifier_fichier(chemin, type):
     Verifies if the file gives as an argument is existing and if the format is the one that we are searching for
 
     Args :
-        chemin (str) : Path of the file we are verifying
+        chemin (str) : Path of the file we are verifying,
         type (str) : Supposed type of the file we are verifying
 
     Returns
@@ -89,9 +89,9 @@ def demander_saisie(message, validateur=None, type=None, erreur_msg="Entrée inv
     Utilitary function that will asks different parameters to the user and use then to execute Code_V4.0.py
 
     Args :
-        message (str) : Message that will appear on the terminal
-        valideur (None) : function that can be used to verify a format
-        erreur_msg (str) : Message that will be show if an error appears
+        message (str) : Message that will appear on the terminal,
+        valideur (None) : function that can be used to verify a format,
+        erreur_msg (str) : Message that will be show if an error appears,
 
     Returns :
         str : The answer of the user
@@ -116,9 +116,9 @@ def main():
     Function that will be used in Code_V4.0.py to take as input values that this function returns
 
     Returns :
-        str : Name of the MP4 file
-        str : Name of the CSV file
-        [str, str] : List of timecode (beginning and ending)
+        str : Name of the MP4 file,
+        str : Name of the CSV file,
+        [str, str] : List of timecode (beginning and ending),
         str : Name of the CSV file for the timeline
     """
     print(
