@@ -23,10 +23,10 @@ vidéo d'eye-tracking et générer des timelines d'attention.
     ```
 
 3.  **Configuration des données :**
-    Ce dépôt n'inclut pas les données vidéo. Vous devez placer les fichiers `.mp4` et `.csv` dans un dossier `datas/`.
+    Ce dépôt n'inclut pas les données vidéo. Vous devez placer les fichiers `.mp4` et `.csv` dans un dossier `Datas/`.
 
 4. **Gestion des sorties :**
-	Ce dépôt n'inclut pas non plus les sorties que peuvent produire les différents programmes. Vous devez créer un dossier `outputs/` (Nom donné dans les codes) afin d'y acceuillir les données de sorties.
+	Ce dépôt n'inclut pas non plus les sorties que peuvent produire les différents programmes. Vous devez créer un dossier `Outputs/` (Nom donné dans les codes) afin d'y acceuillir les données de sorties.
 
 ## Lancement de l'analyse
 
