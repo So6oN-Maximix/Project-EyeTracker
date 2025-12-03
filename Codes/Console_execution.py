@@ -15,6 +15,16 @@ PROTECH_PATH = Path(__file__).resolve().parent.parent
 
 
 def verifier_fichier_video(chemin, type):
+    """
+    Verifie si le chemin du fichier en quesiton est soit existant, soit dans le format demandé par l'argument
+
+    Args :
+        chemin (str) : Le chemin auquel est situé le fichier que l'on souhaite vérifier
+        type (str) : Type de donnée que doit être notre fichier
+
+    Returns
+        str : Etat du test effectué, avec l'erreur associé le cas échéant
+    """
     fichier = Path(chemin)
 
     if not fichier.exists():
