@@ -14,6 +14,20 @@ logger = logging.getLogger("EyeTracker_Console")
 PROTECH_PATH = Path(__file__).resolve().parent.parent
 
 
+def verifier_fichier_video(chemin, type):
+    fichier = Path(chemin)
+
+    if not fichier.exists():
+        return "Introuvable"
+    if type == "video" or type == "vidéo":
+        if fichier.suffix != ".mp4":
+            return "Format Incorrect - Demandé MP4"
+    elif type == "csv":
+        if fichier.suffix != ".csv":
+            return "Format Incorrect - Demandé CSV"
+    return "Valide"
+
+
 def clear_folder(folder_path):
     dossier = Path(folder_path)
 
