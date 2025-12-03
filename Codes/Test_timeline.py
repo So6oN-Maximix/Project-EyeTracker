@@ -85,18 +85,17 @@ def creation_timeline(file_name):
     )
 
     print("================== TIMELINES ==================")
-    for i in range(nbr_datas):
-        duree_total = 0
-        for rectangle in segments[i]:
-            duree_total += rectangle[1]
-        duree_segment = f"{int(duree_total//60):02d}:{int(duree_total%60):02d}"
-        print(f"Durée {titles[i]} -> {duree_segment}")
-    print("")
-
     y_position = 1  # Ecart entre la timeline et l'axe
     bar_height = 5  # Hauteur de la timeline
 
     for i in range(len(names)):
+        for j in range(nbr_datas):
+            duree_total = 0
+            for rectangle in segments[2 * i + j]:
+                duree_total += rectangle[1]
+            duree_segment = f"{int(duree_total//60):02d}:{int(duree_total%60):02d}"
+            print(f"Durée {titles[j]} -> {duree_segment}")
+
         segments_gris = [(0, secondes[i])]
         annotation = all_segments[(nbr_datas + 1) * (i + 1) - 1]
 

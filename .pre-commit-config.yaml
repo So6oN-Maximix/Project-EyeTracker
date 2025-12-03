@@ -1,0 +1,30 @@
+repos:
+  # 1. Des petits outils de nettoyage standard
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace   # Supprime les espaces en fin de ligne (comme Black)
+      - id: end-of-file-fixer     # Assure qu'il y a une ligne vide à la fin du fichier
+      - id: check-yaml            # Vérifie que tes fichiers YAML sont valides
+      - id: check-added-large-files # Empêche de commiter des fichiers géants par erreur
+
+  # 2. Black (Le formatage)
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+
+  # 3. Flake8 (Le style)
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        # On peut ajouter des plugins si nécessaire, mais ta config setup.cfg suffit
+
+  # 4. Mypy (Les types)
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.3.0
+    hooks:
+      - id: mypy
+        # Indispensable : on ajoute les types pour requests sinon mypy va râler
+        additional_dependencies: [types-requests]

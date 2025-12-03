@@ -7,7 +7,7 @@ import logging
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout)],
+    handlers=[logging.FileHandler("Logger_Report.log", mode="w", encoding="utf8")],
 )
 logger = logging.getLogger("EyeTracker_Console")
 
@@ -71,7 +71,7 @@ def demander_saisie(message, validateur=None, erreur_msg="Entrée invalide"):
 
 
 def main():
-    logger.info(
+    print(
         "\n================================ CONFIGURATION ================================"
     )
 
@@ -88,9 +88,10 @@ def main():
 
     name_mp4 = Path(video_path).stem
     name_csv = Path(csv_path).stem
+    logger.debug(f"Egalite des noms : {name_mp4==name_csv}")
 
     if name_mp4 != name_csv:
-        logger.waring(f"\nATTENTION : Les noms diffèrent ({name_mp4} vs {name_csv}).")
+        print(f"\nATTENTION : Les noms diffèrent ({name_mp4} vs {name_csv}).")
         confirm = input("Voulez-vous continuer quand même ? (o/n) : ")
         if confirm.lower() != "o":
             logger.info("\nAnnulation.")
@@ -121,14 +122,14 @@ def main():
         logger.error(f"Erreur lors du nettoyage des dossiers : {e}")
         # On continue quand même ou on arrête selon le besoin
 
-    logger.debug(
+    print(
         "\n================================ DEBUT DE L'ANALYSE ================================"
     )
-    logger.debug(f"\nVidéo   : {Path(video_path).name}")
-    logger.debug(f"\nGaze    : {Path(csv_path).name}")
-    logger.debug(f"\nTC CSV  : {Path(csv_tc_path).name}")
-    logger.debug(f"\nSegment : {tc_start} -> {tc_end}")
-    logger.debug(
+    print(f"\nVidéo   : {Path(video_path).name}")
+    print(f"\nGaze    : {Path(csv_path).name}")
+    print(f"\nTC CSV  : {Path(csv_tc_path).name}")
+    print(f"\nSegment : {tc_start} -> {tc_end}")
+    print(
         "\n===================================================================================="
     )
 
@@ -136,7 +137,6 @@ def main():
     return (
         Path(video_path).name,
         Path(csv_path).name,
-        tc_start,
-        tc_end,
+        [tc_start, tc_end],
         Path(csv_tc_path).name,
     )

@@ -125,7 +125,8 @@ def afficher_carte_chaleur_echelle_video(
         return
 
     frame_index = media_frame_indices[index]
-    frame = extraire_frame_par_index(cap, frame_index)
+    frame_initial = media_frame_indices[0]
+    frame = extraire_frame_par_index(cap, frame_index - frame_initial)
 
     if frame is None:
         print(f"Frame non trouvée pour l'instant {instant} (index {frame_index}).")

@@ -1,6 +1,29 @@
 from pathlib import Path
 import csv
-from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+import subprocess
+import imageio_ffmpeg
+
+
+def prendre_extrait(entree, t1, t2, sortie):
+    ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+    command = [
+        ffmpeg_exe,
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-i",
+        entree,
+        "-ss",
+        str(t1),
+        "-to",
+        str(t2),
+        "-c",
+        "copy",
+        sortie,
+        "-y",
+    ]
+    subprocess.run(command, check=True)
+    print(f"Video MP4 enregistrée : {sortie}")
 
 
 def lecture(file_name, file):
@@ -54,7 +77,7 @@ def reduction(video, fichier_csv, tc1, tc2):
     sauvegarde(output_name_csv, new_tabl)
 
     output_name_mp4 = video.split(".")[0] + "_decoupe.mp4"
-    ffmpeg_extract_subclip(
+    prendre_extrait(
         PROTECH_PATH / "Datas" / video,
         tc01,
         tc02,
