@@ -86,7 +86,7 @@ Console_execution    </h1>
 </span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="sd">    Verifie que le fichier donné comme argument existe et, le cas échéant, vérifie si le format est bien celui attendu</span>
 </span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a>
 </span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">    Args :\n</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format,\n</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format\n</span>
 </span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="sd">        type (str) : Type supposé du fichier analysé</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>
 </span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a><span class="sd">    Returns\n</span>
@@ -109,7 +109,7 @@ Console_execution    </h1>
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="sd">    Nettoie le dossier donné en argument</span>
 </span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="sd">    Args :</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="sd">    Args :\n</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="sd">        folder_path (str) : Chemin vers le dossier que l&#39;on veut nettoyer</span>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>    <span class="n">dossier</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span>
@@ -139,10 +139,10 @@ Console_execution    </h1>
 </span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="sd">    Verifie que le timecode est bien dans le format souhaité en utilisant une &quot;regular expression&quot; (REGEX)</span>
 </span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a><span class="sd">    Args :</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a><span class="sd">    Args :\n</span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a><span class="sd">        tc (str): Timcode dont on veut vérifier le format</span>
 </span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a><span class="sd">    Returns :</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a><span class="sd">    Returns :\n</span>
 </span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a><span class="sd">        Boolean : Etat de la vérification</span>
 </span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{3}</span><span class="s2">$&quot;</span>
@@ -155,13 +155,13 @@ Console_execution    </h1>
 </span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="sd">    Fonction utilisateur qui sert à la demande d&#39;une donnée particulière</span>
 </span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="sd">    Args :</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="sd">        message (str) : Message qui apparaitera pour demander la donnée en question,</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="sd">        valideur (None) : Fonction qui va vérifier la cohérence de la donnée,</span>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">        type (str) : Type de la donnée que l&#39;on demande,</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">        erreur_msg (str) : Message qui apparaitera en car d&#39;erreur dans la saisie de la donnée</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="sd">    Args :\n</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="sd">        message (str) : Message qui apparaitera pour demander la donnée en question\n</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="sd">        valideur (None) : Fonction qui va vérifier la cohérence de la donnée\n</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">        type (str) : Type de la donnée que l&#39;on demande\n</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">        erreur_msg (str) : Message qui apparaitera en car d&#39;erreur dans la saisie de la donnée\n</span>
 </span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">    Returns :</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">    Returns :\n</span>
 </span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">        str : Réponse que va donner l&#39;utilisateur</span>
 </span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -183,10 +183,10 @@ Console_execution    </h1>
 </span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">    Fonction qui récupère chaque réponse de l&#39;utilisateur avant de les donner à Code_V4.0.py qui va les utiliser comme entrée dans son code</span>
 </span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">    Returns :</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="sd">        str : Nom du fichier vidéo à analyser,</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">        str : Nom du fichier CSV (Fichier Gaze) à analyser,</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">        [str, str] : Liste des timecode d&#39;entrée et de sortie (pour la découpe vidéo),</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">    Returns :\n</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="sd">        str : Nom du fichier vidéo à analyser\n</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">        str : Nom du fichier CSV (Fichier Gaze) à analyser\n</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">        [str, str] : Liste des timecode d&#39;entrée et de sortie (pour la découpe vidéo)\n</span>
 </span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">        str : Nom du fichier CSV servant à la création de la timeline</span>
 </span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>    <span class="nb">print</span><span class="p">(</span>
@@ -305,7 +305,7 @@ Console_execution    </h1>
 </span><span id="verifier_fichier-20"><a href="#verifier_fichier-20"><span class="linenos">20</span></a><span class="sd">    Verifie que le fichier donné comme argument existe et, le cas échéant, vérifie si le format est bien celui attendu</span>
 </span><span id="verifier_fichier-21"><a href="#verifier_fichier-21"><span class="linenos">21</span></a>
 </span><span id="verifier_fichier-22"><a href="#verifier_fichier-22"><span class="linenos">22</span></a><span class="sd">    Args :\n</span>
-</span><span id="verifier_fichier-23"><a href="#verifier_fichier-23"><span class="linenos">23</span></a><span class="sd">        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format,\n</span>
+</span><span id="verifier_fichier-23"><a href="#verifier_fichier-23"><span class="linenos">23</span></a><span class="sd">        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format\n</span>
 </span><span id="verifier_fichier-24"><a href="#verifier_fichier-24"><span class="linenos">24</span></a><span class="sd">        type (str) : Type supposé du fichier analysé</span>
 </span><span id="verifier_fichier-25"><a href="#verifier_fichier-25"><span class="linenos">25</span></a>
 </span><span id="verifier_fichier-26"><a href="#verifier_fichier-26"><span class="linenos">26</span></a><span class="sd">    Returns\n</span>
@@ -329,7 +329,7 @@ Console_execution    </h1>
 
 <p>Args :</p>
 
-<pre><code>chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format,
+<pre><code>chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format
 
 type (str) : Type supposé du fichier analysé
 </code></pre>
@@ -357,7 +357,7 @@ type (str) : Type supposé du fichier analysé
 </span><span id="clear_folder-43"><a href="#clear_folder-43"><span class="linenos">43</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="clear_folder-44"><a href="#clear_folder-44"><span class="linenos">44</span></a><span class="sd">    Nettoie le dossier donné en argument</span>
 </span><span id="clear_folder-45"><a href="#clear_folder-45"><span class="linenos">45</span></a>
-</span><span id="clear_folder-46"><a href="#clear_folder-46"><span class="linenos">46</span></a><span class="sd">    Args :</span>
+</span><span id="clear_folder-46"><a href="#clear_folder-46"><span class="linenos">46</span></a><span class="sd">    Args :\n</span>
 </span><span id="clear_folder-47"><a href="#clear_folder-47"><span class="linenos">47</span></a><span class="sd">        folder_path (str) : Chemin vers le dossier que l&#39;on veut nettoyer</span>
 </span><span id="clear_folder-48"><a href="#clear_folder-48"><span class="linenos">48</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="clear_folder-49"><a href="#clear_folder-49"><span class="linenos">49</span></a>    <span class="n">dossier</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">folder_path</span><span class="p">)</span>
@@ -386,8 +386,10 @@ type (str) : Type supposé du fichier analysé
 
             <div class="docstring"><p>Nettoie le dossier donné en argument</p>
 
-<p>Args :
-    folder_path (str) : Chemin vers le dossier que l'on veut nettoyer</p>
+<p>Args :</p>
+
+<pre><code>folder_path (str) : Chemin vers le dossier que l'on veut nettoyer
+</code></pre>
 </div>
 
 
@@ -407,10 +409,10 @@ type (str) : Type supposé du fichier analysé
 </span><span id="verifier_format_timecode-73"><a href="#verifier_format_timecode-73"><span class="linenos">73</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="verifier_format_timecode-74"><a href="#verifier_format_timecode-74"><span class="linenos">74</span></a><span class="sd">    Verifie que le timecode est bien dans le format souhaité en utilisant une &quot;regular expression&quot; (REGEX)</span>
 </span><span id="verifier_format_timecode-75"><a href="#verifier_format_timecode-75"><span class="linenos">75</span></a>
-</span><span id="verifier_format_timecode-76"><a href="#verifier_format_timecode-76"><span class="linenos">76</span></a><span class="sd">    Args :</span>
+</span><span id="verifier_format_timecode-76"><a href="#verifier_format_timecode-76"><span class="linenos">76</span></a><span class="sd">    Args :\n</span>
 </span><span id="verifier_format_timecode-77"><a href="#verifier_format_timecode-77"><span class="linenos">77</span></a><span class="sd">        tc (str): Timcode dont on veut vérifier le format</span>
 </span><span id="verifier_format_timecode-78"><a href="#verifier_format_timecode-78"><span class="linenos">78</span></a>
-</span><span id="verifier_format_timecode-79"><a href="#verifier_format_timecode-79"><span class="linenos">79</span></a><span class="sd">    Returns :</span>
+</span><span id="verifier_format_timecode-79"><a href="#verifier_format_timecode-79"><span class="linenos">79</span></a><span class="sd">    Returns :\n</span>
 </span><span id="verifier_format_timecode-80"><a href="#verifier_format_timecode-80"><span class="linenos">80</span></a><span class="sd">        Boolean : Etat de la vérification</span>
 </span><span id="verifier_format_timecode-81"><a href="#verifier_format_timecode-81"><span class="linenos">81</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="verifier_format_timecode-82"><a href="#verifier_format_timecode-82"><span class="linenos">82</span></a>    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{3}</span><span class="s2">$&quot;</span>
@@ -422,11 +424,15 @@ type (str) : Type supposé du fichier analysé
 
             <div class="docstring"><p>Verifie que le timecode est bien dans le format souhaité en utilisant une "regular expression" (REGEX)</p>
 
-<p>Args :
-    tc (str): Timcode dont on veut vérifier le format</p>
+<p>Args :</p>
 
-<p>Returns :
-    Boolean : Etat de la vérification</p>
+<pre><code>tc (str): Timcode dont on veut vérifier le format
+</code></pre>
+
+<p>Returns :</p>
+
+<pre><code>Boolean : Etat de la vérification
+</code></pre>
 </div>
 
 
@@ -446,13 +452,13 @@ type (str) : Type supposé du fichier analysé
 </span><span id="demander_saisie-89"><a href="#demander_saisie-89"><span class="linenos"> 89</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="demander_saisie-90"><a href="#demander_saisie-90"><span class="linenos"> 90</span></a><span class="sd">    Fonction utilisateur qui sert à la demande d&#39;une donnée particulière</span>
 </span><span id="demander_saisie-91"><a href="#demander_saisie-91"><span class="linenos"> 91</span></a>
-</span><span id="demander_saisie-92"><a href="#demander_saisie-92"><span class="linenos"> 92</span></a><span class="sd">    Args :</span>
-</span><span id="demander_saisie-93"><a href="#demander_saisie-93"><span class="linenos"> 93</span></a><span class="sd">        message (str) : Message qui apparaitera pour demander la donnée en question,</span>
-</span><span id="demander_saisie-94"><a href="#demander_saisie-94"><span class="linenos"> 94</span></a><span class="sd">        valideur (None) : Fonction qui va vérifier la cohérence de la donnée,</span>
-</span><span id="demander_saisie-95"><a href="#demander_saisie-95"><span class="linenos"> 95</span></a><span class="sd">        type (str) : Type de la donnée que l&#39;on demande,</span>
-</span><span id="demander_saisie-96"><a href="#demander_saisie-96"><span class="linenos"> 96</span></a><span class="sd">        erreur_msg (str) : Message qui apparaitera en car d&#39;erreur dans la saisie de la donnée</span>
+</span><span id="demander_saisie-92"><a href="#demander_saisie-92"><span class="linenos"> 92</span></a><span class="sd">    Args :\n</span>
+</span><span id="demander_saisie-93"><a href="#demander_saisie-93"><span class="linenos"> 93</span></a><span class="sd">        message (str) : Message qui apparaitera pour demander la donnée en question\n</span>
+</span><span id="demander_saisie-94"><a href="#demander_saisie-94"><span class="linenos"> 94</span></a><span class="sd">        valideur (None) : Fonction qui va vérifier la cohérence de la donnée\n</span>
+</span><span id="demander_saisie-95"><a href="#demander_saisie-95"><span class="linenos"> 95</span></a><span class="sd">        type (str) : Type de la donnée que l&#39;on demande\n</span>
+</span><span id="demander_saisie-96"><a href="#demander_saisie-96"><span class="linenos"> 96</span></a><span class="sd">        erreur_msg (str) : Message qui apparaitera en car d&#39;erreur dans la saisie de la donnée\n</span>
 </span><span id="demander_saisie-97"><a href="#demander_saisie-97"><span class="linenos"> 97</span></a>
-</span><span id="demander_saisie-98"><a href="#demander_saisie-98"><span class="linenos"> 98</span></a><span class="sd">    Returns :</span>
+</span><span id="demander_saisie-98"><a href="#demander_saisie-98"><span class="linenos"> 98</span></a><span class="sd">    Returns :\n</span>
 </span><span id="demander_saisie-99"><a href="#demander_saisie-99"><span class="linenos"> 99</span></a><span class="sd">        str : Réponse que va donner l&#39;utilisateur</span>
 </span><span id="demander_saisie-100"><a href="#demander_saisie-100"><span class="linenos">100</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="demander_saisie-101"><a href="#demander_saisie-101"><span class="linenos">101</span></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -473,14 +479,21 @@ type (str) : Type supposé du fichier analysé
 
             <div class="docstring"><p>Fonction utilisateur qui sert à la demande d'une donnée particulière</p>
 
-<p>Args :
-    message (str) : Message qui apparaitera pour demander la donnée en question,
-    valideur (None) : Fonction qui va vérifier la cohérence de la donnée,
-    type (str) : Type de la donnée que l'on demande,
-    erreur_msg (str) : Message qui apparaitera en car d'erreur dans la saisie de la donnée</p>
+<p>Args :</p>
 
-<p>Returns :
-    str : Réponse que va donner l'utilisateur</p>
+<pre><code>message (str) : Message qui apparaitera pour demander la donnée en question
+
+valideur (None) : Fonction qui va vérifier la cohérence de la donnée
+
+type (str) : Type de la donnée que l'on demande
+
+erreur_msg (str) : Message qui apparaitera en car d'erreur dans la saisie de la donnée
+</code></pre>
+
+<p>Returns :</p>
+
+<pre><code>str : Réponse que va donner l'utilisateur
+</code></pre>
 </div>
 
 
@@ -500,10 +513,10 @@ type (str) : Type supposé du fichier analysé
 </span><span id="main-117"><a href="#main-117"><span class="linenos">117</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="main-118"><a href="#main-118"><span class="linenos">118</span></a><span class="sd">    Fonction qui récupère chaque réponse de l&#39;utilisateur avant de les donner à Code_V4.0.py qui va les utiliser comme entrée dans son code</span>
 </span><span id="main-119"><a href="#main-119"><span class="linenos">119</span></a>
-</span><span id="main-120"><a href="#main-120"><span class="linenos">120</span></a><span class="sd">    Returns :</span>
-</span><span id="main-121"><a href="#main-121"><span class="linenos">121</span></a><span class="sd">        str : Nom du fichier vidéo à analyser,</span>
-</span><span id="main-122"><a href="#main-122"><span class="linenos">122</span></a><span class="sd">        str : Nom du fichier CSV (Fichier Gaze) à analyser,</span>
-</span><span id="main-123"><a href="#main-123"><span class="linenos">123</span></a><span class="sd">        [str, str] : Liste des timecode d&#39;entrée et de sortie (pour la découpe vidéo),</span>
+</span><span id="main-120"><a href="#main-120"><span class="linenos">120</span></a><span class="sd">    Returns :\n</span>
+</span><span id="main-121"><a href="#main-121"><span class="linenos">121</span></a><span class="sd">        str : Nom du fichier vidéo à analyser\n</span>
+</span><span id="main-122"><a href="#main-122"><span class="linenos">122</span></a><span class="sd">        str : Nom du fichier CSV (Fichier Gaze) à analyser\n</span>
+</span><span id="main-123"><a href="#main-123"><span class="linenos">123</span></a><span class="sd">        [str, str] : Liste des timecode d&#39;entrée et de sortie (pour la découpe vidéo)\n</span>
 </span><span id="main-124"><a href="#main-124"><span class="linenos">124</span></a><span class="sd">        str : Nom du fichier CSV servant à la création de la timeline</span>
 </span><span id="main-125"><a href="#main-125"><span class="linenos">125</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="main-126"><a href="#main-126"><span class="linenos">126</span></a>    <span class="nb">print</span><span class="p">(</span>
@@ -583,11 +596,16 @@ type (str) : Type supposé du fichier analysé
 
             <div class="docstring"><p>Fonction qui récupère chaque réponse de l'utilisateur avant de les donner à Code_V4.0.py qui va les utiliser comme entrée dans son code</p>
 
-<p>Returns :
-    str : Nom du fichier vidéo à analyser,
-    str : Nom du fichier CSV (Fichier Gaze) à analyser,
-    [str, str] : Liste des timecode d'entrée et de sortie (pour la découpe vidéo),
-    str : Nom du fichier CSV servant à la création de la timeline</p>
+<p>Returns :</p>
+
+<pre><code>str : Nom du fichier vidéo à analyser
+
+str : Nom du fichier CSV (Fichier Gaze) à analyser
+
+[str, str] : Liste des timecode d'entrée et de sortie (pour la découpe vidéo)
+
+str : Nom du fichier CSV servant à la création de la timeline
+</code></pre>
 </div>
 
 

@@ -19,7 +19,7 @@ def verifier_fichier(chemin, type):
     Verifie que le fichier donné comme argument existe et, le cas échéant, vérifie si le format est bien celui attendu
 
     Args :\n
-        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format,\n
+        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format\n
         type (str) : Type supposé du fichier analysé
 
     Returns\n
@@ -42,7 +42,7 @@ def clear_folder(folder_path):
     """
     Nettoie le dossier donné en argument
 
-    Args :
+    Args :\n
         folder_path (str) : Chemin vers le dossier que l'on veut nettoyer
     """
     dossier = Path(folder_path)
@@ -72,10 +72,10 @@ def verifier_format_timecode(tc):
     """
     Verifie que le timecode est bien dans le format souhaité en utilisant une "regular expression" (REGEX)
 
-    Args :
+    Args :\n
         tc (str): Timcode dont on veut vérifier le format
 
-    Returns :
+    Returns :\n
         Boolean : Etat de la vérification
     """
     pattern = r"^\d{2}:\d{2}:\d{2}:\d{3}$"
@@ -88,13 +88,13 @@ def demander_saisie(message, validateur=None, type=None, erreur_msg="Entrée inv
     """
     Fonction utilisateur qui sert à la demande d'une donnée particulière
 
-    Args :
-        message (str) : Message qui apparaitera pour demander la donnée en question,
-        valideur (None) : Fonction qui va vérifier la cohérence de la donnée,
-        type (str) : Type de la donnée que l'on demande,
-        erreur_msg (str) : Message qui apparaitera en car d'erreur dans la saisie de la donnée
+    Args :\n
+        message (str) : Message qui apparaitera pour demander la donnée en question\n
+        valideur (None) : Fonction qui va vérifier la cohérence de la donnée\n
+        type (str) : Type de la donnée que l'on demande\n
+        erreur_msg (str) : Message qui apparaitera en car d'erreur dans la saisie de la donnée\n
 
-    Returns :
+    Returns :\n
         str : Réponse que va donner l'utilisateur
     """
     while True:
@@ -116,10 +116,10 @@ def main():
     """
     Fonction qui récupère chaque réponse de l'utilisateur avant de les donner à Code_V4.0.py qui va les utiliser comme entrée dans son code
 
-    Returns :
-        str : Nom du fichier vidéo à analyser,
-        str : Nom du fichier CSV (Fichier Gaze) à analyser,
-        [str, str] : Liste des timecode d'entrée et de sortie (pour la découpe vidéo),
+    Returns :\n
+        str : Nom du fichier vidéo à analyser\n
+        str : Nom du fichier CSV (Fichier Gaze) à analyser\n
+        [str, str] : Liste des timecode d'entrée et de sortie (pour la découpe vidéo)\n
         str : Nom du fichier CSV servant à la création de la timeline
     """
     print(
