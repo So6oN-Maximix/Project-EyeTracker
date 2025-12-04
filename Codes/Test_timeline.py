@@ -6,6 +6,18 @@ from moviepy import VideoFileClip
 
 
 def lecture(file_name):
+    """
+    Permet de lire un fichier CSV d'un format particulier, puis calcul ensuite les données souhaitées
+
+    Args :\n
+        file_name (str) : Nom du fichier CSV à lire
+
+    Returns :\n
+        segments ([(float, float)]) : Liste de tuples qui contient le seconde de départ et la durée du segement en secondes\n
+        titres ([str]) : Titres des différents données du CSV\n
+        secondes ([float]) : Durée des vidéos mentionnées dans le CSV\n
+        names ([str]) : Nom des données présentes dans le CSV
+    """
     datas = []
     with open(file_name, "r", encoding="utf-8") as file:
         doc = csv.reader(file)
@@ -57,6 +69,15 @@ def lecture(file_name):
 
 
 def convertion_secounds(timecode):
+    """
+    Convetit un time code du format XX:XX:XX:XXX en seconde
+
+    Args :\n
+        timecode (str) : Timecode à convertir
+
+    Returns :\n
+        int : Timecode en secondes
+    """
     parts = timecode.split(":")
     return (
         3600 * int(parts[0]) + 60 * int(parts[1]) + int(parts[2]) + int(parts[3]) / 1000
@@ -64,6 +85,15 @@ def convertion_secounds(timecode):
 
 
 def list_to_timecode(positions):
+    """
+    Prendre une liste de temps en secondes pour les convertir en timecodes (on se limite au format MM:SS)
+
+    Args :\n
+        positions (liste) : Liste des temps en secondes que l'on souhaite convertir au format timecode
+
+    Returns :\n
+        liste : Renvoi la liste des timecodes associés
+    """
     tc0 = positions[0]
     labels = [f"{int(tc0//60):02d}:{int(tc0%60):02d}"]
     for i in range(1, len(positions)):
@@ -77,6 +107,12 @@ def list_to_timecode(positions):
 
 
 def creation_timeline(file_name):
+    """
+    Fonction de création des timelines
+
+    Args :\n
+        file_name : Nom du fichier CSV pour la création de la timeline
+    """
     all_segments, titles, secondes, names = lecture(PROTECH_PATH / "Datas" / file_name)
     nbr_datas = (len(all_segments) - 2) // 2
 
