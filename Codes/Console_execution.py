@@ -16,14 +16,14 @@ PROTECH_PATH = Path(__file__).resolve().parent.parent
 
 def verifier_fichier(chemin, type):
     """
-    Verifies if the file gives as an argument is existing and if the format is the one that we are searching for
+    Verifie que le fichier donné comme argument existe et, le cas échéant, vérifie si le format est bien celui attendu
 
     Args :
-        chemin (str) : Path of the file we are verifying,
-        type (str) : Supposed type of the file we are verifying
+        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format,
+        type (str) : Type supposé du fichier analysé
 
     Returns
-        str : State of the test, and the reason if it's not complete
+        str : Etat du test, et la raison si jamais le test n'est pas concluant
     """
     fichier = Path(chemin)
 
@@ -40,10 +40,10 @@ def verifier_fichier(chemin, type):
 
 def clear_folder(folder_path):
     """
-    Clean the folder given as an argument
+    Nettoie le dossier donné en argument
 
     Args :
-        folder_path (str) : Path of the file we want to clean
+        folder_path (str) : Chemin vers le dossier que l'on veut nettoyer
     """
     dossier = Path(folder_path)
 
@@ -70,13 +70,13 @@ def clear_folder(folder_path):
 
 def verifier_format_timecode(tc):
     """
-    Verify that the timecode is in the correct format by using a regular expression (REGEX)
+    Verifie que le timecode est bien dans le format souhaité en utilisant une "regular expression" (REGEX)
 
     Args :
-        tc (str): Timcode that we want to verify the format
+        tc (str): Timcode dont on veut vérifier le format
 
     Returns :
-        Boolean : State of the verification
+        Boolean : Etat de la vérification
     """
     pattern = r"^\d{2}:\d{2}:\d{2}:\d{3}$"
     if not re.match(pattern, tc):
@@ -86,15 +86,16 @@ def verifier_format_timecode(tc):
 
 def demander_saisie(message, validateur=None, type=None, erreur_msg="Entrée invalide"):
     """
-    Utilitary function that will asks different parameters to the user and use then to execute Code_V4.0.py
+    Fonction utilisateur qui sert à la demande d'une donnée particulière
 
     Args :
-        message (str) : Message that will appear on the terminal,
-        valideur (None) : function that can be used to verify a format,
-        erreur_msg (str) : Message that will be show if an error appears,
+        message (str) : Message qui apparaitera pour demander la donnée en question,
+        valideur (None) : Fonction qui va vérifier la cohérence de la donnée,
+        type (str) : Type de la donnée que l'on demande,
+        erreur_msg (str) : Message qui apparaitera en car d'erreur dans la saisie de la donnée
 
     Returns :
-        str : The answer of the user
+        str : Réponse que va donner l'utilisateur
     """
     while True:
         valeur = input(message).strip()
@@ -113,13 +114,12 @@ def demander_saisie(message, validateur=None, type=None, erreur_msg="Entrée inv
 
 def main():
     """
-    Function that will be used in Code_V4.0.py to take as input values that this function returns
-
+    Fonction qui récupère chaque réponse de l'utilisateur avant de les donner à Code_V4.0.py qui va les utiliser comme entrée dans son code
     Returns :
-        str : Name of the MP4 file,
-        str : Name of the CSV file,
-        [str, str] : List of timecode (beginning and ending),
-        str : Name of the CSV file for the timeline
+        str : Nom du fichier vidéo à analyser,
+        str : Nom du fichier CSV (Fichier Gaze) à analyser,
+        [str, str] : Liste des timecode d'entrée et de sortie (pour la découpe vidéo),
+        str : Nom du fichier CSV servant à la création de la timeline
     """
     print(
         "\n================================ CONFIGURATION ================================"
