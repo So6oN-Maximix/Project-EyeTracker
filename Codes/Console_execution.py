@@ -18,11 +18,11 @@ def verifier_fichier(chemin, type):
     """
     Verifie que le fichier donné comme argument existe et, le cas échéant, vérifie si le format est bien celui attendu
 
-    Args :
-        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format,
+    Args :\n
+        chemin (str) : Chemin vers le fichier dont on souhaite vérifier le format,\n
         type (str) : Type supposé du fichier analysé
 
-    Returns
+    Returns\n
         str : Etat du test, et la raison si jamais le test n'est pas concluant
     """
     fichier = Path(chemin)

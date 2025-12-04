@@ -16,6 +16,15 @@ import Carte_de_chaleur
 
 
 def get_output_path(filename):
+    """
+    Permet de récupérer le chemin de sorite pour enregistrer les graphs\n
+
+    Args :\n
+        filename (str) : Nom du fichier à enregister
+
+    Returns :\n
+        str : Chemin du fichier que l'on veut enregister
+    """
     return Reduction_video.PROTECH_PATH / "Outputs" / "Graphs" / filename
 
 
@@ -36,6 +45,7 @@ def display_graph(
     arrow=False,
     arrow_params=None,
 ):
+    """ """
     plt.figure(figsize=size)
 
     if bg_image is not None:
