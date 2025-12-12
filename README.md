@@ -33,7 +33,7 @@ vidéo d'eye-tracking et générer des timelines d'attention.
 Pour lancer le script d'analyse principal :
 
 ```bash
-poetry run python3 codes/Code_V4.0.py
+poetry run python3 Codes/Code_V4.0.py
 ```
 
 Vous pouvez adapter le `python` en `python3` en fonction de votre configuration.
