@@ -54,8 +54,8 @@ jobs:
 
       - name: Lint with Flake8
         run: |
-          poetry run flake8 Code/ --count --select=E9,F63,F7,F82 --show-source --statistics
-          poetry run flake8 Code/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          poetry run flake8 Codes/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          poetry run flake8 Codes/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Gitleaks Security Scan
         uses: gitleaks/gitleaks-action@v2
@@ -105,7 +105,7 @@ jobs:
       - name: Generate HTML Docs
         run: |
           export PYTHONPATH=$PYTHONPATH:.
-          poetry run pdoc Code -o docs/
+          poetry run pdoc Codes -o docs/
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
