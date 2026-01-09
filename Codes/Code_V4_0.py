@@ -7,10 +7,10 @@ import cv2
 import sys
 
 # On importe les différents programmes necessaires à l'exécution
-import Reduction_video
-import Console_execution
-import Test_timeline
-import Carte_de_chaleur
+from . import Reduction_video
+from . import Console_execution
+from . import Test_timeline
+from . import Carte_de_chaleur
 
 ############################ Fonctions Utilitaires Optimisées ############################
 

@@ -105,7 +105,7 @@ jobs:
       - name: Generate HTML Docs
         run: |
           export PYTHONPATH=$PYTHONPATH:.
-          poetry run pdoc Codes -o docs/
+          PDOC_ALLOW_EXEC=1 poetry run pdoc Codes -o docs/
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
