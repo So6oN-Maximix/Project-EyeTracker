@@ -78,7 +78,7 @@ jobs:
       - name: Build Artifacts
         run: |
           pip install poetry
-          poetry install
+          poetry install --no-root
           poetry build --no-root
 
       - name: Create GitHub Release
