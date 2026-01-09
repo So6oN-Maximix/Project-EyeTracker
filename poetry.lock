@@ -68,6 +68,20 @@ test = ["contourpy", "matplotlib", "pillow"]
 test-no-images = ["pytest", "pytest-cov", "pytest-rerunfailures", "pytest-xdist", "wurlitzer"]
 
 [[package]]
+name = "coverage"
+version = "7.13.1"
+description = "Code coverage measurement for Python"
+category = "dev"
+optional = false
+python-versions = ">=3.10"
+
+[package.dependencies]
+tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.11.0a6\" and extra == \"toml\""}
+
+[package.extras]
+toml = ["tomli"]
+
+[[package]]
 name = "cycler"
 version = "0.12.1"
 description = "Composable style cycles"
@@ -209,6 +223,20 @@ optional = false
 python-versions = ">=3.10"
 
 [[package]]
+name = "jinja2"
+version = "3.1.6"
+description = "A very fast and expressive template engine."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+MarkupSafe = ">=2.0"
+
+[package.extras]
+i18n = ["Babel (>=2.7)"]
+
+[[package]]
 name = "joblib"
 version = "1.5.2"
 description = "Lightweight pipelining with Python functions"
@@ -228,6 +256,28 @@ python-versions = ">=3.10"
 name = "librt"
 version = "0.6.3"
 description = "Mypyc runtime library"
+category = "dev"
+optional = false
+python-versions = ">=3.9"
+
+[[package]]
+name = "markdown2"
+version = "2.5.4"
+description = "A fast and complete Python implementation of Markdown"
+category = "dev"
+optional = false
+python-versions = "<4,>=3.9"
+
+[package.extras]
+all = ["pygments (>=2.7.3)", "wavedrom", "latex2mathml"]
+code-syntax-highlighting = ["pygments (>=2.7.3)"]
+latex = ["latex2mathml"]
+wavedrom = ["wavedrom"]
+
+[[package]]
+name = "markupsafe"
+version = "3.0.3"
+description = "Safely add untrusted strings to HTML/XML markup."
 category = "dev"
 optional = false
 python-versions = ">=3.9"
@@ -360,7 +410,7 @@ python-versions = ">=3.8"
 [[package]]
 name = "pandas"
 version = "2.3.3"
-description = "Powerful data structures for data analysis, time series, and statistics"
+poetry add --dev flake8 blackdescription = "Powerful data structures for data analysis, time series, and statistics"
 category = "main"
 optional = false
 python-versions = ">=3.9"
@@ -378,7 +428,7 @@ tzdata = ">=2022.7"
 [package.extras]
 test = ["hypothesis (>=6.46.1)", "pytest (>=7.3.2)", "pytest-xdist (>=2.2.0)"]
 pyarrow = ["pyarrow (>=10.0.1)"]
-performance = ["bottleneck (>=1.3.6)", "numba (>=0.56.4)", "numexpr (>=2.8.4)"]
+performance = ["bottleneck (>poetry add --dev flake8 black=1.3.6)", "numba (>=0.56.4)", "numexpr (>=2.8.4)"]
 computation = ["scipy (>=1.10.0)", "xarray (>=2022.12.0)"]
 fss = ["fsspec (>=2022.11.0)"]
 aws = ["s3fs (>=2022.11.0)"]
@@ -407,6 +457,20 @@ description = "Utility library for gitignore style pattern matching of file path
 category = "dev"
 optional = false
 python-versions = ">=3.8"
+
+[[package]]
+name = "pdoc"
+version = "16.0.0"
+description = "API Documentation for Python Projects"
+category = "dev"
+optional = false
+python-versions = ">=3.10"
+
+[package.dependencies]
+Jinja2 = ">=2.11.0"
+markdown2 = ">=2.5.4"
+MarkupSafe = ">=1.1.1"
+pygments = ">=2.12.0"
 
 [[package]]
 name = "pillow"
@@ -493,6 +557,17 @@ optional = false
 python-versions = ">=3.9"
 
 [[package]]
+name = "pygments"
+version = "2.19.2"
+description = "Pygments is a syntax highlighting package written in Python."
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+windows-terminal = ["colorama (>=0.4.6)"]
+
+[[package]]
 name = "pyparsing"
 version = "3.2.5"
 description = "pyparsing - Classes and methods to define and execute parsing grammars"
@@ -521,6 +596,22 @@ tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
 testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
+
+[[package]]
+name = "pytest-cov"
+version = "7.0.0"
+description = "Pytest plugin for measuring coverage."
+category = "dev"
+optional = false
+python-versions = ">=3.9"
+
+[package.dependencies]
+coverage = {version = ">=7.10.6", extras = ["toml"]}
+pluggy = ">=1.2"
+pytest = ">=7"
+
+[package.extras]
+testing = ["process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "pytest-mock"
@@ -736,7 +827,7 @@ test = ["covdefaults (>=2.3)", "coverage-enable-subprocess (>=1)", "coverage (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "d026ac5470cccad291722fa51eb73ec40e52fae1cb4201068bf2e6cfee5ba294"
+content-hash = "150b02d948faee0c697cdab6f88420a20e887f2d3bcb04186c291d1861fc00ea"
 
 [metadata.files]
 black = []
@@ -744,6 +835,7 @@ cfgv = []
 click = []
 colorama = []
 contourpy = []
+coverage = []
 cycler = []
 decorator = []
 distlib = []
@@ -755,9 +847,12 @@ identify = []
 imageio = []
 imageio-ffmpeg = []
 iniconfig = []
+jinja2 = []
 joblib = []
 kiwisolver = []
 librt = []
+markdown2 = []
+markupsafe = []
 matplotlib = []
 mccabe = []
 moviepy = []
@@ -769,6 +864,7 @@ opencv-python = []
 packaging = []
 pandas = []
 pathspec = []
+pdoc = []
 pillow = []
 platformdirs = []
 pluggy = []
@@ -776,8 +872,10 @@ pre-commit = []
 proglog = []
 pycodestyle = []
 pyflakes = []
+pygments = []
 pyparsing = []
 pytest = []
+pytest-cov = []
 pytest-mock = []
 python-dateutil = []
 python-dotenv = []

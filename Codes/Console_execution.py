@@ -153,12 +153,12 @@ def main():
     tc_start = demander_saisie(
         "Timecode Début (HH:MM:SS:ms) : ",
         verifier_format_timecode,
-        "Format invalide. Attendu : XX:XX:XX:XXX",
+        erreur_msg="Format invalide. Attendu : XX:XX:XX:XXX",
     )
     tc_end = demander_saisie(
         "Timecode Fin (HH:MM:SS:ms) : ",
         verifier_format_timecode,
-        "Format invalide. Attendu : XX:XX:XX:XXX",
+        erreur_msg="Format invalide. Attendu : XX:XX:XX:XXX",
     )
     csv_tc_path = demander_saisie(
         "Entrez le chemin du fichier TimeCodes Timeline (.csv) : ",
