@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "ProTech sur l'EyeTracking"
 authors = ["Max Leost <maxime.leost@gmail.com>"]
 readme = "README.md"
-packages = [{include = "Code"}]
+packages = [{include = "Codes"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
