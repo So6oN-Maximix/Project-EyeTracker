@@ -2,10 +2,10 @@ name: CI/CD EyeTracker
 
 on:
   push:
-    branches: [ "master", "main" ]
+    branches: [ "main" ]
     tags: [ "v*" ]
   pull_request:
-    branches: [ "master", "main" ]
+    branches: [ "main" ]
 
 permissions:
   contents: write
@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install poetry
-          poetry install
+          poetry install --no-root
 
       - name: Run Tests
         run: |
@@ -50,7 +50,7 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        run: pip install poetry && poetry install
+        run: pip install poetry && poetry install --no-root
 
       - name: Lint with Flake8
         run: |
@@ -79,7 +79,7 @@ jobs:
         run: |
           pip install poetry
           poetry install
-          poetry build
+          poetry build --no-root
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -101,7 +101,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Install dependencies
-        run: pip install poetry && poetry install
+        run: pip install poetry && poetry install --no-root
       - name: Generate HTML Docs
         run: |
           export PYTHONPATH=$PYTHONPATH:.
