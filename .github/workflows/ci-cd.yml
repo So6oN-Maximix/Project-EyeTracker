@@ -78,7 +78,7 @@ jobs:
       - name: Build Artifacts
         run: |
           pip install poetry
-          poetry build --no-root
+          poetry build
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
